@@ -54,6 +54,8 @@ contract VoteOnDino {
         winningProposal();
 
         for (uint256 i = 0; i < dinoNames.length; i++) {
+            // delete doesn't actually remove from array.length calls
+            // just nulls values out (need better delete function)
             delete knownDinoNames[dinoNames[i].name];
             delete dinoNames[i];
         }
