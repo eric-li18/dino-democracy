@@ -10,6 +10,7 @@ contract VoteOnDino {
 
     DinoName[] public dinoNames;
     mapping(bytes32 => bool) knownDinoNames;
+    uint256 public dinoNamesCount = 0;
 
     uint256 public voteEndTime;
     bool ended = false;
@@ -40,6 +41,11 @@ contract VoteOnDino {
         dinoNames.push(
             DinoName({name: dinoName, votes: 0, submitter: msg.sender})
         );
+        dinoNamesCount++;
+    }
+
+    function getDinoNamesCount() public view returns (uint256 length) {
+        return (dinoNames.length);
     }
 
     function isDinoName(bytes32 dinoName) public view returns (bool) {
@@ -59,6 +65,7 @@ contract VoteOnDino {
             delete knownDinoNames[dinoNames[i].name];
             delete dinoNames[i];
         }
+        dinoNamesCount = 0;
 
         emit DinoVoteEnded(winner.name, winner.submitter, winner.votes);
     }
