@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import VoteOnDinoContract from "./contracts/VoteOnDino.json";
 import getWeb3 from "./getWeb3";
-
-import NewDino from "./components/NewDino";
-import VoteOnDino from "./components/VoteOnDino";
+import Home from "./pages/Home";
 
 import "./App.css";
 
+
+
 class App extends Component {
-  state = { storageValue: null, web3: null, accounts: null, contract: null };
+  state = { web3: null, accounts: null, contract: null };
 
   componentDidMount = async () => {
     try {
@@ -28,7 +28,7 @@ class App extends Component {
 
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      this.setState({ web3, accounts, contract: instance });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -38,29 +38,14 @@ class App extends Component {
     }
   };
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
-
-    // Stores a given value, 5 by default.
-    // console.log(contract)
-    // await contract.methods.set(5).send({ from: accounts[0] });
-    // const name = "0x746573740000000000000000000000000000000000000000000900000000000";
-    // console.log(contract)
-    // await contract.methods.addDinoName(name).send({ from: accounts[0] });
-
-    // Get the value from the contract to prove it worked.
-    // const response = await contract.methods.get().call();
-
-    // contract.methods.dinoNames(0).call()
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    // console.log(contract);
-    
-
-    // Update state with the result.
-    // this.setState({ storageValue: response});
-  };
+  getProtocolInfo()
+  {
+    return {
+      web3: this.state.web3,
+      account: this.state.accounts[0],
+      contract: this.state.contract,
+    }
+  }
 
   render() {
     if (!this.state.web3) {
@@ -68,8 +53,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <VoteOnDino web3={this.state.web3} contract={this.state.contract} accounts={this.state.accounts} />
-        <NewDino web3={this.state.web3} contract={this.state.contract} accounts={this.state.accounts} />
+        <Home protocolInfo={this.getProtocolInfo()} />
       </div>
     );
   }

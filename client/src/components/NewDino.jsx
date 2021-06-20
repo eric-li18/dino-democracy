@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 
-export default function NewDino({ web3, contract, accounts }) {
+export default function NewDino({ submitNewDinoOnClick }) {
   const [dinoInput, setDinoInput] = useState('');
 
-  async function submitNewDino(event) {
-    event.preventDefault();
-    await contract.methods.addDinoName(web3.utils.asciiToHex(dinoInput)).send({ from: accounts[0] });
+  // async function submitNewDino(event) {
+  //   await contract.methods.addDinoName(web3.utils.asciiToHex(dinoInput)).send({ from: accounts[0] });
+  // }
+  function submitNewDino(e) {
+    e.preventDefault();
+    submitNewDinoOnClick(dinoInput);
   }
 
   function handleDinoInput(event) {
