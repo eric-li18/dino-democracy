@@ -13,7 +13,7 @@ contract VoteOnDino {
     uint256 public dinoNamesCount = 0;
 
     uint256 public voteEndTime;
-    bool ended = false;
+    bool public ended = false;
     DinoName winner;
 
     event DinoVoteEnded(bytes32 name, address submitter, uint256 votes);
