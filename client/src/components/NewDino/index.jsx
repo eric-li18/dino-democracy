@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styles from './new-dino.module.scss';
 
 export default function NewDino({ submitNewDinoOnClick }) {
   const [dinoInput, setDinoInput] = useState('');
@@ -17,9 +18,9 @@ export default function NewDino({ submitNewDinoOnClick }) {
 
   return (
     <div>
-      <form onSubmit={submitNewDino}>
-        <input type="text" value={dinoInput} onChange={handleDinoInput} />
-        <button type="submit" value="Submit">Submit New Dino</button>
+      <form onSubmit={submitNewDino} className={styles.form}>
+        <input className={styles.input} type="text" value={dinoInput} onChange={handleDinoInput} />
+        <button className={styles.button} type="submit" value="Submit">submit new dino</button>
       </form>
     </div>
   )

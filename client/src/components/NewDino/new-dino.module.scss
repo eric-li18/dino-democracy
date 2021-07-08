@@ -1,0 +1,39 @@
+.form {
+  display: flex;
+  flex-direction: column;
+
+  .input {
+    height: 50px;
+    width: 400px;
+    border-radius: 10px;
+    border: none;
+    font-family: Comic Sans MS;
+    font-size: 20px;
+    padding: 0 20px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .button {
+    border-radius: 10px;
+    border: none;
+    height: 50px;
+    width: 400px;
+    background-color: #dab672;
+    color: rgba(0,0,0, 0.5);
+    font-family: Comic Sans MS;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 10px;
+    border: 3px solid rgba(0,0,0,0.5);
+
+    &:active, &:hover {
+      background-color: #cc9a3d;
+      -webkit-transition: background-color 200ms linear;
+      -ms-transition: background-color 200ms linear;
+      transition: background-color 200ms linear;
+    }
+  }
+}

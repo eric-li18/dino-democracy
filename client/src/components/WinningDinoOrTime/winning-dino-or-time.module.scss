@@ -1,0 +1,18 @@
+.winner {
+  font-family: Comic Sans MS;
+  color: #716F48;
+  -webkit-text-stroke: 1px white;
+  font-size: 40px;
+  .name {
+    background-color: #dab672;
+    border-radius: 10px;
+    padding-bottom: 4px;
+    padding: 0 8px 4px 8px;
+  }
+}
+
+.time {
+  font-family: Comic Sans MS;
+  font-size: 35px;
+  color: #3a2713;
+}

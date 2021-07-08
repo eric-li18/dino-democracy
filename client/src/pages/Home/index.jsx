@@ -1,14 +1,15 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import { submitNewDino, getDinoNames, voteOnDino, voteEndTime, winningDino, getEnded, endVote } from '../../lib/apis/dino-voting';
-import NewDino from '../../components/NewDino';
 import DinoNames from '../../components/DinoNames';
+import Container from '../../components/Container';
+import Header from '../../components/Header';
 
 export default function Home({ protocolInfo }) {
   const [dinoNames, setDinoNames] = useState([]);
-  const [endTime, setEndtime] = useState(0);
   const [ended, setEnded] = useState(false);
   const [winningDinoName, setWinningDinoName] = useState("");
+  const [timeLeft, setTimeLeft] = useState(0);
   const now = new Date();
 
   const refreshDinoNames = async () => {
@@ -28,17 +29,22 @@ export default function Home({ protocolInfo }) {
 
   const getTimeLeft = () => {
     if (!ended) {
-      var seconds = Math.floor((endTime - (now))/1000);
-      var minutes = Math.floor(seconds/60);
-      var hours = Math.floor(minutes/60);
-
-      minutes = minutes-(hours*60);
-      seconds = seconds-(hours*60*60)-(minutes*60);
-      return hours + ":" + minutes + ":" + seconds;
+      return formatTime(timeLeft);
     }
     else {
       return "0";
     }
+  }
+  
+  const formatTime = (timeInSeconds) => {
+    var minutes = Math.floor(timeInSeconds/60);
+    var hours = Math.floor(minutes/60);
+    var days = Math.floor(hours/24);
+
+    hours = hours - (days*24);
+    minutes = minutes-(hours*60)- (days*24*60);
+    timeInSeconds = timeInSeconds-(hours*60*60)-(minutes*60)- (days*24*60*60);
+    return days + " days " + hours + ":" + minutes + ":" + timeInSeconds;
   }
 
   const getWinningDino = async () => {
@@ -48,9 +54,10 @@ export default function Home({ protocolInfo }) {
 
   const endVoteAndGetWinner = async () => {
     const voteEnded = await getEnded(protocolInfo); 
-    const endTime = await voteEndTime(protocolInfo);
-    let date = new Date(endTime * 1000);
-    setEndtime(date)
+    const votingEndTime = await voteEndTime(protocolInfo);
+    let date = new Date(votingEndTime * 1000);
+    var seconds = Math.floor((date - (now))/1000);
+    setTimeLeft(seconds);
 
     if (date < now) {
       if (!voteEnded) {
@@ -60,23 +67,23 @@ export default function Home({ protocolInfo }) {
       getWinningDino();
     }
   }
- 
+
   useEffect(() => {
     endVoteAndGetWinner();
     refreshDinoNames();
-    // getWinningDino();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(timeLeft - 1);
+    }, 1000); 
+    return () => clearInterval(interval);
+  });
+
   return (
-    <div>
-      { !ended && <h3>Time left: { getTimeLeft() }</h3> }
-      { ended && (
-        <div>
-          { winningDinoName ? <h1>Winning Dino: {winningDinoName} </h1> : <h1>No Winner</h1>}
-        </div>
-      )}
+    <Container>
+      <Header ended={ended} winningDinoName={winningDinoName} submitNewDinoOnClick={submitNewDinoOnClick} time={getTimeLeft()}/>
       <DinoNames dinoNames={dinoNames} voteOnDinoOnClick={voteOnDinoOnClick} />
-      <NewDino submitNewDinoOnClick={submitNewDinoOnClick} />
-    </div>
+    </Container>
   )
 }

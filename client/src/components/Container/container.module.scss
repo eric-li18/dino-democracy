@@ -1,0 +1,10 @@
+.container {
+  // margin: 0 10vw; 
+  height: 100vh;
+  // background: #A09F7D;
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
