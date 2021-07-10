@@ -10,6 +10,7 @@ export default function Home({ protocolInfo }) {
   const [ended, setEnded] = useState(false);
   const [winningDinoName, setWinningDinoName] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
+  const [timerInterval, setTimerInterval] = useState(null);
   const now = new Date();
 
   const refreshDinoNames = async () => {
@@ -40,11 +41,17 @@ export default function Home({ protocolInfo }) {
     var minutes = Math.floor(timeInSeconds/60);
     var hours = Math.floor(minutes/60);
     var days = Math.floor(hours/24);
+    var time = '';
 
     hours = hours - (days*24);
     minutes = minutes-(hours*60)- (days*24*60);
     timeInSeconds = timeInSeconds-(hours*60*60)-(minutes*60)- (days*24*60*60);
-    return days + " days " + hours + ":" + minutes + ":" + timeInSeconds;
+    time += days ? (days + " days ") : '';
+    time += hours + ':';
+    time += minutes < 10 ? ("0" + minutes + ":") : minutes + ":";
+    time += timeInSeconds < 10 ? ("0" + timeInSeconds) : timeInSeconds
+
+    return time;
   }
 
   const getWinningDino = async () => {
@@ -68,6 +75,12 @@ export default function Home({ protocolInfo }) {
     }
   }
 
+  const checkTime = () => {
+    if (timeLeft === 0) {
+      endVoteAndGetWinner();
+    }
+  }
+
   useEffect(() => {
     endVoteAndGetWinner();
     refreshDinoNames();
@@ -75,7 +88,12 @@ export default function Home({ protocolInfo }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(timeLeft - 1);
+      if (timeLeft === 0) {
+        endVoteAndGetWinner();
+      }
+      else {
+        setTimeLeft(timeLeft - 1);
+      }
     }, 1000); 
     return () => clearInterval(interval);
   });

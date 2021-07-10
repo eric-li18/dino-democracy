@@ -25,7 +25,7 @@ export default function DinoNames({ dinoNames, voteOnDinoOnClick }) {
 
   return (
     <div className={styles.dinoNamesWrapper}>
-      {dinoNamesList && (
+      {dinoNames.length !== 0 && (
         <table>
           <thead>
             <tr>
