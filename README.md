@@ -27,29 +27,20 @@ This toy project was made to explore and learn technologies for making decentral
 
 ### Getting Started
 
-Install truffle with `npm install truffle -g`
-
-Install [Ganache](https://www.trufflesuite.com/ganache)
-
-Set up a new workspace and point it to truffle-config.js in the root directory. 
-
-In the root directoy run 
-
-`truffle compile`
-
-`truffle migrate`
-
-cd into the client directory and run
-
-`npm i`
-
-`npm start`
-
-Install [MetaMask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
-
-Head to [localhost:3000](http://localhost:3000/) and the MetaMask overlay should pop up. 
-
-Click **import using Secret Recovery Phrase** and paste in the code from Ganache. 
-
-Checkout the [Truffle tutorial](https://www.trufflesuite.com/tutorial) for additional details on setting up.
+1. Install truffle with `npm install truffle -g`
+2. Install [Ganache](https://www.trufflesuite.com/ganache)
+3. Set up a new workspace and point it to truffle-config.js in the root directory. 
+4. In the root directoy run 
+```
+truffle compile
+truffle migrate
+```
+5. cd into the client directory and run
+```npm i
+npm start
+```
+6. Install [MetaMask](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
+7. Head to [localhost:3000](http://localhost:3000/) and the MetaMask overlay should pop up. 
+8. Click **import using Secret Recovery Phrase** and paste in the code from Ganache. 
+9. Checkout the [Truffle tutorial](https://www.trufflesuite.com/tutorial) for additional details on setting up.
 
